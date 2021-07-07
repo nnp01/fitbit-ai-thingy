@@ -2,14 +2,34 @@ WITH 2 INPUT VARIABLES:
 
     Data with 3 days training: 
         Last loss: 0.0001533827162347734
-        nference Loss: 0.010796776041388512
+        Inference Loss: 0.010796776041388512 | doctored +10h
 
     Data with a year training:
         Last loss: 0.00015209607954602689
-        Inference Loss: 0.010344329290091991
+        Inference Loss: 0.010344329290091991 | doctored +10h
 
 WITH 3 INPUT VARIABLES:
 
     Data with 12 days training:
         Last loss: 5.5129770771600306e-05
-        Inference Loss: 0.00710294721648097
+        Inference Loss: 0.00710294721648097 | doctored +10h
+
+    Data with 3 days training:
+        Last loss: 5.5517724831588566e-05
+        Inference Loss: 0.0115809952840209 | not doctored
+
+    Data with 3 days training:
+        Last loss: 5.7518180256010965e-05
+        Inference Loss: 0.05579588562250137 | doctored +50h
+
+    Data with 2 days training:
+        Last loss: 9.056373528437689e-05
+        Inference Loss: 0.008545687422156334 | used full day for testing, not doctored
+
+    Data with 2 days training:
+        Last loss: 6.25418615527451e-05
+        Inference Loss: 0.007309704087674618 | used full day for testing, doctored +10h
+
+    DAta with 3 days training:
+        Last loss: 5.748712283093482e-05
+        Inference Loss: 0.6343940496444702 | normal data, only 2 minutes

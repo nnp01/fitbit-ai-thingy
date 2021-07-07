@@ -28,7 +28,7 @@ def fitbitImportDoctored(heart_rate_file, steps_file, calories_file): # function
         
         dataset = []
         for i in range(len(heart_rate_data['activities-heart-intraday']['dataset'])):
-            heart_rate = (heart_rate_data['activities-heart-intraday']['dataset'][i]['value']+10)/100
+            heart_rate = (heart_rate_data['activities-heart-intraday']['dataset'][i]['value'])/100
             steps = steps_data['activities-steps-intraday']['dataset'][i]['value']/100
             calories = calories_data['activities-calories-intraday']['dataset'][i]['value']/100
             one_minute = [heart_rate, steps, calories]
@@ -51,9 +51,6 @@ training_data3 = fitbitImport('heart_0607.json', 'steps_0607.json', 'calories_06
 training_data1.extend(training_data2)
 training_data1.extend(training_data3)
 
-training_data1.extend(training_data1)
-training_data1.extend(training_data1)
-
 training_data = torch.tensor(training_data1)
 #training_data = torch.rand((100,10))
 
@@ -74,8 +71,9 @@ for e in range(epoch):
 print("Last loss:", myVariable) # prints last loss
 
 #inference
-#anomaly_data_ = torch.tensor([[97/100, 102/100], [89/100, 99/100]])
-anomaly_data_ = torch.tensor(fitbitImportDoctored('heart_0707.json', 'steps_0707.json', 'calories_0707.json'))
+#anomaly_data_ = torch.tensor([[60/100, 0, 1.3]])
+#anomaly_data_ = torch.tensor(fitbitImportDoctored('heart_0507.json', 'steps_0507.json', 'calories_0507.json'))
+anomaly_data_ = training_data
 
 anomaly_data = anomaly_data_
 [elm.eval() for elm in model]
