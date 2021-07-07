@@ -14,7 +14,7 @@ def fitbitImport(heart_rate_file, steps_file): # function for importing fitbit d
             one_minute = [heart_rate_data['activities-heart-intraday']['dataset'][i]['value']/100, steps_data['activities-steps-intraday']['dataset'][i]['value']/100]
             dataset.append(one_minute)
 
-    return torch.tensor(dataset)
+    return dataset
 
 
 params_dict_list = []
@@ -26,7 +26,13 @@ for i in range(len(model)):
 opt = torch.optim.SGD(params_dict_list, lr=1e-2, momentum=0.9)
 loss_func = torch.nn.MSELoss()
 
-training_data = fitbitImport('heart.json', 'steps.json')
+# makes a dataset with all training data combined
+training_data1 = fitbitImport('heart_0407.json', 'steps_0407.json')
+training_data2 = fitbitImport('heart_0507.json', 'steps_0507.json')
+training_data3 = fitbitImport('heart_0607.json', 'steps_0607.json')
+training_data1.extend(training_data2)
+training_data1.extend(training_data3)
+training_data = torch.tensor(training_data1)
 #training_data = torch.rand((100,10))
 
 epoch = 10
@@ -43,11 +49,11 @@ for e in range(epoch):
         opt.zero_grad()
         loss.backward()
         opt.step()
-print(myVariable) # prints last loss
+print("Last loss:", myVariable) # prints last loss
 
 #inference
 #anomaly_data_ = torch.tensor([[97/100, 102/100], [89/100, 99/100]])
-anomaly_data_ = fitbitImport('heart_0507.json', 'steps_0507.json')
+anomaly_data_ = torch.tensor(fitbitImport('heart_0707.json', 'steps_0707.json'))
 
 anomaly_data = anomaly_data_
 [elm.eval() for elm in model]
