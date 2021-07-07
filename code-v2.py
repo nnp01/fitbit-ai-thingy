@@ -23,26 +23,25 @@ with open('heart.json') as heart, open('steps.json') as steps:
         one_minute = [heart_rate_data['activities-heart-intraday']['dataset'][i]['value']/100, steps_data['activities-steps-intraday']['dataset'][i]['value']/100]
         dataset.append(one_minute)
 
-random_data = torch.tensor(dataset)
+training_data = torch.tensor(dataset)
 
-
-#random_data = torch.rand((100,10))
+#training_data = torch.rand((100,10))
 
 epoch = 10
 for e in range(epoch):
-    for d_i in random_data:
+    for d_i in training_data:
         d_o = d_i
         for i in range(len(model)):
             d_o = model[i](d_o.unsqueeze(0))
         
         loss = loss_func(d_i, d_o)
 
-        #myVariable = loss.item()
-        print(loss.item())
+        myVariable = loss.item()
+        #print(loss.item())
         opt.zero_grad()
         loss.backward()
         opt.step()
-#print(myVariable)
+print(myVariable) # prints last loss
 
 #inference
 #anomaly_data_ = torch.rand((1,2))
