@@ -62,7 +62,7 @@ for e in range(epoch):
         
         loss = loss_func(d_i, d_o)
 
-        myVariable = loss.item()
+        last_loss = loss.item()
         #print(loss.item())
         opt.zero_grad()
         loss.backward()
@@ -78,6 +78,15 @@ with torch.no_grad():
     for i in range(len(model)):
         anomaly_data_ = model[i](anomaly_data_)
     loss = loss_func(anomaly_data, anomaly_data_)
-    print("Last loss:", myVariable) # prints last loss
-    print("Inference Loss:", loss.item()) # prints inference loss
+    inference = loss.item()
+
+    print("\n"+'='*40+"\n")
+    print("Last loss:       ", last_loss) # prints last loss
+    print("Inference Loss:  ", inference) # prints inference loss
+
+    if (last_loss - 0.012)>inference: # tells the user if there could be a health issue
+        print("\n\tEverything is alright!")
+    else:
+        print("\n\tThere might be a problem!")
+    print("\n"+'='*40)
     
