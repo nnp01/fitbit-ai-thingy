@@ -1,0 +1,7 @@
+Data with 3 days training: 
+    Last loss: 0.0001533827162347734
+    nference Loss: 0.010796776041388512
+
+Data with a year training:
+    Last loss: 0.00015209607954602689
+    Inference Loss: 0.010344329290091991
