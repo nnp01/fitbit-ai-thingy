@@ -3,7 +3,6 @@ import json
 
 model = []
 model.append(torch.nn.Linear(3, 1))
-model.append(torch.nn.Linear(1, 3))
 
 def fitbitImport(heart_rate_file, steps_file, calories_file): # function for importing fitbit data
     with open(heart_rate_file) as heartF, open(steps_file) as stepsF, open(calories_file) as caloriesF:
@@ -45,13 +44,13 @@ opt = torch.optim.SGD(params_dict_list, lr=1e-2, momentum=0.9)
 loss_func = torch.nn.MSELoss()
 
 # makes a dataset with all training data combined
-training_data1 = fitbitImport('heart_0407.json', 'steps_0407.json', 'calories_0407.json')
+#training_data1 = fitbitImport('heart_0407.json', 'steps_0407.json', 'calories_0407.json')
 training_data2 = fitbitImport('heart_0507.json', 'steps_0507.json', 'calories_0507.json')
 training_data3 = fitbitImport('heart_0607.json', 'steps_0607.json', 'calories_0607.json')
-training_data1.extend(training_data2)
-training_data1.extend(training_data3)
+training_data2.extend(training_data2)
+training_data2.extend(training_data3)
 
-training_data = torch.tensor(training_data1)
+training_data = torch.tensor(training_data2)
 #training_data = torch.rand((100,10))
 
 epoch = 10
@@ -68,12 +67,10 @@ for e in range(epoch):
         opt.zero_grad()
         loss.backward()
         opt.step()
-print("Last loss:", myVariable) # prints last loss
 
 #inference
 #anomaly_data_ = torch.tensor([[60/100, 0, 1.3]])
-#anomaly_data_ = torch.tensor(fitbitImportDoctored('heart_0507.json', 'steps_0507.json', 'calories_0507.json'))
-anomaly_data_ = training_data
+anomaly_data_ = torch.tensor(fitbitImportDoctored('heart_0707.json', 'steps_0707.json', 'calories_0707.json'))
 
 anomaly_data = anomaly_data_
 [elm.eval() for elm in model]
@@ -81,5 +78,6 @@ with torch.no_grad():
     for i in range(len(model)):
         anomaly_data_ = model[i](anomaly_data_)
     loss = loss_func(anomaly_data, anomaly_data_)
-    print("Inference Loss:", loss.item())
+    print("Last loss:", myVariable) # prints last loss
+    print("Inference Loss:", loss.item()) # prints inference loss
     
