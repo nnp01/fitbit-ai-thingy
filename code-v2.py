@@ -47,7 +47,7 @@ print(myVariable) # prints last loss
 
 #inference
 #anomaly_data_ = torch.tensor([[97/100, 102/100], [89/100, 99/100]])
-anomaly_data_ = fitbitImport('heart_test.json', 'steps_test.json')
+anomaly_data_ = fitbitImport('heart_0507.json', 'steps_0507.json')
 
 anomaly_data = anomaly_data_
 [elm.eval() for elm in model]
