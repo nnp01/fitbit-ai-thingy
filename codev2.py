@@ -44,13 +44,13 @@ opt = torch.optim.SGD(params_dict_list, lr=1e-2, momentum=0.9)
 loss_func = torch.nn.MSELoss()
 
 # makes a dataset with all training data combined
-#training_data1 = fitbitImport('heart_0407.json', 'steps_0407.json', 'calories_0407.json')
+training_data1 = fitbitImport('fitbit data/heart_0407.json', 'fitbit data/steps_0407.json', 'fitbit data/calories_0407.json')
 training_data2 = fitbitImport('fitbit data/heart_0507.json', 'fitbit data/steps_0507.json', 'fitbit data/calories_0507.json')
 training_data3 = fitbitImport('fitbit data/heart_0607.json', 'fitbit data/steps_0607.json', 'fitbit data/calories_0607.json')
-training_data2.extend(training_data2)
-training_data2.extend(training_data3)
+training_data1.extend(training_data2)
+training_data1.extend(training_data3)
 
-training_data = torch.tensor(training_data2)
+training_data = torch.tensor(training_data1)
 #training_data = torch.rand((100,10))
 
 epoch = 10
