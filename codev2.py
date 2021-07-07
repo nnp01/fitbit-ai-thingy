@@ -2,29 +2,37 @@ import torch
 import json
 
 model = []
-model.append(torch.nn.Linear(2, 1))
-model.append(torch.nn.Linear(1, 2))
+model.append(torch.nn.Linear(3, 1))
+model.append(torch.nn.Linear(1, 3))
 
-def fitbitImport(heart_rate_file, steps_file): # function for importing fitbit data
-    with open(heart_rate_file) as heart, open(steps_file) as steps:
-        heart_rate_data = json.load(heart)
-        steps_data = json.load(steps)
+def fitbitImport(heart_rate_file, steps_file, calories_file): # function for importing fitbit data
+    with open(heart_rate_file) as heartF, open(steps_file) as stepsF, open(calories_file) as caloriesF:
+        heart_rate_data = json.load(heartF)
+        steps_data = json.load(stepsF)
+        calories_data = json.load(caloriesF)
+        
         dataset = []
         for i in range(len(heart_rate_data['activities-heart-intraday']['dataset'])):
-            one_minute = [heart_rate_data['activities-heart-intraday']['dataset'][i]['value']/100, steps_data['activities-steps-intraday']['dataset'][i]['value']/100]
+            heart_rate = heart_rate_data['activities-heart-intraday']['dataset'][i]['value']/100
+            steps = steps_data['activities-steps-intraday']['dataset'][i]['value']/100
+            calories = calories_data['activities-calories-intraday']['dataset'][i]['value']/100
+            one_minute = [heart_rate, steps, calories]
             dataset.append(one_minute)
-
     return dataset
 
-def fitbitImportDoctored(heart_rate_file, steps_file): # function for importing FALSE fitbit data
-    with open(heart_rate_file) as heart, open(steps_file) as steps:
-        heart_rate_data = json.load(heart)
-        steps_data = json.load(steps)
+def fitbitImportDoctored(heart_rate_file, steps_file, calories_file): # function for importing fitbit data
+    with open(heart_rate_file) as heartF, open(steps_file) as stepsF, open(calories_file) as caloriesF:
+        heart_rate_data = json.load(heartF)
+        steps_data = json.load(stepsF)
+        calories_data = json.load(caloriesF)
+        
         dataset = []
         for i in range(len(heart_rate_data['activities-heart-intraday']['dataset'])):
-            one_minute = [(heart_rate_data['activities-heart-intraday']['dataset'][i]['value']+10)/100, steps_data['activities-steps-intraday']['dataset'][i]['value']/100]
+            heart_rate = (heart_rate_data['activities-heart-intraday']['dataset'][i]['value']+10)/100
+            steps = steps_data['activities-steps-intraday']['dataset'][i]['value']/100
+            calories = calories_data['activities-calories-intraday']['dataset'][i]['value']/100
+            one_minute = [heart_rate, steps, calories]
             dataset.append(one_minute)
-
     return dataset
 
 params_dict_list = []
@@ -37,9 +45,9 @@ opt = torch.optim.SGD(params_dict_list, lr=1e-2, momentum=0.9)
 loss_func = torch.nn.MSELoss()
 
 # makes a dataset with all training data combined
-training_data1 = fitbitImport('heart_0407.json', 'steps_0407.json')
-training_data2 = fitbitImport('heart_0507.json', 'steps_0507.json')
-training_data3 = fitbitImport('heart_0607.json', 'steps_0607.json')
+training_data1 = fitbitImport('heart_0407.json', 'steps_0407.json', 'calories_0407.json')
+training_data2 = fitbitImport('heart_0507.json', 'steps_0507.json', 'calories_0507.json')
+training_data3 = fitbitImport('heart_0607.json', 'steps_0607.json', 'calories_0607.json')
 training_data1.extend(training_data2)
 training_data1.extend(training_data3)
 
@@ -67,7 +75,7 @@ print("Last loss:", myVariable) # prints last loss
 
 #inference
 #anomaly_data_ = torch.tensor([[97/100, 102/100], [89/100, 99/100]])
-anomaly_data_ = torch.tensor(fitbitImportDoctored('heart_0707.json', 'steps_0707.json'))
+anomaly_data_ = torch.tensor(fitbitImportDoctored('heart_0707.json', 'steps_0707.json', 'calories_0707.json'))
 
 anomaly_data = anomaly_data_
 [elm.eval() for elm in model]
