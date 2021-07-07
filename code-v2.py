@@ -2,8 +2,8 @@ import torch
 import json
 
 model = []
-model.append(torch.nn.Linear(10, 5))
-model.append(torch.nn.Linear(5, 10))
+model.append(torch.nn.Linear(2, 1))
+model.append(torch.nn.Linear(1, 2))
 
 params_dict_list = []
 for i in range(len(model)):
@@ -14,20 +14,19 @@ for i in range(len(model)):
 opt = torch.optim.SGD(params_dict_list, lr=1e-2, momentum=0.9)
 loss_func = torch.nn.MSELoss()
 
-''''
 # fitbit data import
 with open('heart.json') as heart, open('steps.json') as steps:
     heart_rate_data = json.load(heart)
     steps_data = json.load(steps)
     dataset = []
     for i in range(len(heart_rate_data['activities-heart-intraday']['dataset'])):
-        one_minute = [float(heart_rate_data['activities-heart-intraday']['dataset'][i]['value']), float(steps_data['activities-steps-intraday']['dataset'][i]['value'])]
+        one_minute = [heart_rate_data['activities-heart-intraday']['dataset'][i]['value']/100, steps_data['activities-steps-intraday']['dataset'][i]['value']/100]
         dataset.append(one_minute)
 
 random_data = torch.tensor(dataset)
 
-'''
-random_data = torch.rand((100,10))
+
+#random_data = torch.rand((100,10))
 
 epoch = 10
 for e in range(epoch):
@@ -37,13 +36,18 @@ for e in range(epoch):
             d_o = model[i](d_o.unsqueeze(0))
         
         loss = loss_func(d_i, d_o)
+
+        #myVariable = loss.item()
         print(loss.item())
         opt.zero_grad()
         loss.backward()
         opt.step()
-    
+#print(myVariable)
+
 #inference
-anomaly_data_ = torch.rand((1,2))
+#anomaly_data_ = torch.rand((1,2))
+anomaly_data_ = torch.tensor([[97/100, 102/100], [89/100, 99/100]])
+
 anomaly_data = anomaly_data_
 [elm.eval() for elm in model]
 with torch.no_grad():
