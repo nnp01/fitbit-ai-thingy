@@ -45,8 +45,8 @@ loss_func = torch.nn.MSELoss()
 
 # makes a dataset with all training data combined
 #training_data1 = fitbitImport('heart_0407.json', 'steps_0407.json', 'calories_0407.json')
-training_data2 = fitbitImport('heart_0507.json', 'steps_0507.json', 'calories_0507.json')
-training_data3 = fitbitImport('heart_0607.json', 'steps_0607.json', 'calories_0607.json')
+training_data2 = fitbitImport('fitbit data/heart_0507.json', 'fitbit data/steps_0507.json', 'fitbit data/calories_0507.json')
+training_data3 = fitbitImport('fitbit data/heart_0607.json', 'fitbit data/steps_0607.json', 'fitbit data/calories_0607.json')
 training_data2.extend(training_data2)
 training_data2.extend(training_data3)
 
@@ -70,7 +70,7 @@ for e in range(epoch):
 
 #inference
 #anomaly_data_ = torch.tensor([[60/100, 0, 1.3]])
-anomaly_data_ = torch.tensor(fitbitImportDoctored('heart_0707.json', 'steps_0707.json', 'calories_0707.json'))
+anomaly_data_ = torch.tensor(fitbitImportDoctored('fitbit data/heart_0707.json', 'fitbit data/steps_0707.json', 'fitbit data/calories_0707.json'))
 
 anomaly_data = anomaly_data_
 [elm.eval() for elm in model]
