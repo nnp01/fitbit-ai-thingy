@@ -15,8 +15,8 @@ app.get('/', (req, res) => {
   python.stdout.on('data', function (data) {
   console.log('Pipe data from python script ...');
   dataToSend = data.toString();
-  var scriptAnswer = `<p>${dataToSend}</p>`;
-  $('body').append(scriptAnswer);
+  var scriptAnswer = $(`<p class='python'>${dataToSend}</p>`);
+  $('.python').replaceWith(scriptAnswer);
 
 })
 python.on('close', (code) => {
