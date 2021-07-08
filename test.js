@@ -4,7 +4,7 @@ const fs = require('fs');
 const {spawn} = require('child_process');
 const app = express()
 const port = 3000
-var html = fs.readFileSync('C:/Users/students/Desktop/LABASLIETAS' + '/index.html', 'utf8');
+var html = fs.readFileSync('index.html', 'utf8');
 var $ = cheerio.load(html);
 
 app.get('/', (req, res) => {
