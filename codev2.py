@@ -80,11 +80,11 @@ with torch.no_grad():
     loss = loss_func(anomaly_data, anomaly_data_)
     inference = loss.item()
 
-    print("Last loss:       ", last_loss) # prints last loss
-    print("Inference Loss:  ", inference) # prints inference loss
+    #print("Last loss:       ", last_loss) # prints last loss
+    #print("Inference Loss:  ", inference) # prints inference loss
 
     if (last_loss - 0.012)>inference: # tells the user if there could be a health issue
-        print('<img src="/checkmark.png">Everything is alright!')
+        print('<p><img src="/checkmark.png"></p><b>Everything is alright!</b>')
     else:
         print("There might be a problem!")
     
