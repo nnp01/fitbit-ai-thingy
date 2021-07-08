@@ -27,7 +27,7 @@ def fitbitImportDoctored(heart_rate_file, steps_file, calories_file): # function
         
         dataset = []
         for i in range(len(heart_rate_data['activities-heart-intraday']['dataset'])):
-            heart_rate = (heart_rate_data['activities-heart-intraday']['dataset'][i]['value'])/100
+            heart_rate = (heart_rate_data['activities-heart-intraday']['dataset'][i]['value']+10)/100
             steps = steps_data['activities-steps-intraday']['dataset'][i]['value']/100
             calories = calories_data['activities-calories-intraday']['dataset'][i]['value']/100
             one_minute = [heart_rate, steps, calories]
@@ -84,7 +84,7 @@ with torch.no_grad():
     #print("Inference Loss:  ", inference) # prints inference loss
 
     if (last_loss - 0.012)>inference: # tells the user if there could be a health issue
-        print('<p><img src="/checkmark.png"></p><b>Everything is alright!</b>')
+        print('<p><img style="width:160px" src="/checkmark.png"></p><b>Everything is alright!</b>')
     else:
-        print("There might be a problem!")
+        print('<p><img style="width:160px" src="/red_x.png"></p><b>There might be a problem!</b>')
     
