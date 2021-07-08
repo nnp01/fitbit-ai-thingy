@@ -3,6 +3,7 @@ const cheerio = require('cheerio');
 const fs = require('fs');
 const {spawn} = require('child_process');
 const app = express()
+app.use(express.static('public'));
 const port = 3000
 var html = fs.readFileSync('index.html', 'utf8');
 var $ = cheerio.load(html);
