@@ -80,7 +80,6 @@ with torch.no_grad():
     loss = loss_func(anomaly_data, anomaly_data_)
     inference = loss.item()
 
-    print("\n"+'='*40+"\n")
     print("Last loss:       ", last_loss) # prints last loss
     print("Inference Loss:  ", inference) # prints inference loss
 
@@ -88,5 +87,4 @@ with torch.no_grad():
         print("\n\tEverything is alright!")
     else:
         print("\n\tThere might be a problem!")
-    print("\n"+'='*40)
     
