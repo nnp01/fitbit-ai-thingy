@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
   $ = cheerio.load(html);
   var dataToSend;
   // spawn new child process to call the python script
-  const python = spawn('python', ['codev2.py']);
+  const python = spawn('python', ['codeAI.py']);
   // collect data from script
   python.stdout.on('data', function (data) {
   console.log('Pipe data from python script ...');
