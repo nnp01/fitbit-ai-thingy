@@ -5,10 +5,12 @@ const {spawn} = require('child_process');
 const app = express()
 app.use(express.static('public'));
 const port = 3000
-var html = fs.readFileSync('index.html', 'utf8');
-var $ = cheerio.load(html);
+var html
+var $
 
 app.get('/', (req, res) => {
+  html = fs.readFileSync('index.html', 'utf8');
+  $ = cheerio.load(html);
   var dataToSend;
   // spawn new child process to call the python script
   const python = spawn('python', ['codev2.py']);
