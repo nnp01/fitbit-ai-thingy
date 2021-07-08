@@ -84,7 +84,7 @@ with torch.no_grad():
     print("Inference Loss:  ", inference) # prints inference loss
 
     if (last_loss - 0.012)>inference: # tells the user if there could be a health issue
-        print("\n\tEverything is alright!")
+        print('<img src="/checkmark.png">Everything is alright!')
     else:
-        print("\n\tThere might be a problem!")
+        print("There might be a problem!")
     
