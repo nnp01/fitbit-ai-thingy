@@ -4,6 +4,8 @@ import json
 model = []
 model.append(torch.nn.Linear(3, 1))
 
+plus_hr = 0 #variable for doctoring testing data
+
 def fitbitImport(heart_rate_file, steps_file, calories_file): # function for importing fitbit data
     with open(heart_rate_file) as heartF, open(steps_file) as stepsF, open(calories_file) as caloriesF:
         heart_rate_data = json.load(heartF)
@@ -27,7 +29,7 @@ def fitbitImportDoctored(heart_rate_file, steps_file, calories_file): # function
         
         dataset = []
         for i in range(len(heart_rate_data['activities-heart-intraday']['dataset'])):
-            heart_rate = (heart_rate_data['activities-heart-intraday']['dataset'][i]['value']+10)/100
+            heart_rate = (heart_rate_data['activities-heart-intraday']['dataset'][i]['value']+plus_hr)/100
             steps = steps_data['activities-steps-intraday']['dataset'][i]['value']/100
             calories = calories_data['activities-calories-intraday']['dataset'][i]['value']/100
             one_minute = [heart_rate, steps, calories]
